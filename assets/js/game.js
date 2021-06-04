@@ -7,6 +7,7 @@ var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
+////////////////////////////////////////////////////FIGHT FUNCTION////////////////////////////////////////////////////////////////////////////       
 
 var fight = function(enemyName) {
     while(enemyHealth > 0 && enemyHealth >0){
@@ -61,20 +62,28 @@ else {
 }
 };
 
+////////////////////////////////////////////////////END FIGHT FUNCTION////////////////////////////////////////////////////////////////////////////       
 
-
+////////////////////////////////////////////////////START GAME FUNCTION////////////////////////////////////////////////////////////////////////////       
 
 var startGame = function(){
 // reset player stats
   playerHealth = 100;
   playerAttack = 10;
   playerMoney = 10;
-for(var i = 0; i < enemyNames.length; i++) {
+    for(var i = 0; i < enemyNames.length; i++) {
     if (playerHealth > 0) {
         window.alert("Welcome to Robot Gladiators! Round" + ( i + 1 ) );
         var pickedEnemyName = enemyNames[i];
     enemyHealth= 50;
     fight(pickedEnemyName);
+    
+    if (playerHealth > 0 && i < enemyNames.length -1){  // this says 'if we're not at the last enemy/object in the array'
+        var storeConfirm = window.confirm("Go to the Shop?");
+        if (storeConfirm){
+        shop();
+    }
+    }
       }
       else {
         window.alert("You have lost your robot in battle! Game Over!");
@@ -86,6 +95,7 @@ for(var i = 0; i < enemyNames.length; i++) {
 startGame();
   };
 
+  ////////////////////////////////////////////////////END GAME FUNCTION////////////////////////////////////////////////////////////////////////////       
   var endGame = function(){
       if (playerHealth>0){
           alert("Congrats! You survived the game with a score of " + playerMoney);
@@ -102,6 +112,43 @@ startGame();
           alert("Thanks for playing, come again!");
       }
   }
+
+  ////////////////////////////////////////////////////  SHOP   ////////////////////////////////////////////////////////////////////////////       
+
+  var shop = function(){
+      var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Enter 'REFILL' 'UPGRADE' or 'LEAVE' ");
+  
+      switch(shopOptionPrompt){
+          case "refill": 
+          if (playerMoney >= 7){
+          alert("Refilled player health by 20hp. -7 dollars.");
+          playerHealth = playerHealth + 20;
+          playerMoney = playerMoney - 7;
+          }
+          else {
+              alert("You don't have enough money");
+          }
+          break;
+          
+          case "upgrade": 
+          if (playerMoney >= 7){
+          alert("Upgraded attack by 6. -7 dollars");
+          playerAttack = playerAttack + 6;
+          playerMoney = playerMoney - 7;
+          }
+          else{
+              alert("You don't have enough money")
+          }
+          break;
+          
+          case "leave": alert("Leaving the Store");
+          break;
+          default: alert("Choose a valid option.");
+          shop();       //recall the shop function to shop again if a non choice was selected 
+          break;
+      } 
+  
+    }
 
   // start the game when the page loads
 startGame();
